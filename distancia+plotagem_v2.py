@@ -7,10 +7,11 @@ import matplotlib.patches as patches
 import numpy
 import random as rd
 import math
-distanciamentosocial = 3
+distanciamentosocial = 5
 badperson = bool(False)
 lado = distanciamentosocial/2
 total = 0
+axisize = 100
 
 #fixed size array
 #lista_loc_eixo_x = [-10,-5,0,5]
@@ -21,9 +22,10 @@ lista_loc_eixo_x = []
 lista_loc_eixo_y = []
 
 #filling random array, change range number to add more points
-for x in range(100):
-    lista_loc_eixo_x.append(rd.randint(-100,100))
-    lista_loc_eixo_y.append(rd.randint(-100,100))
+qtdofindividuals = 1000
+for x in range(qtdofindividuals):
+    lista_loc_eixo_x.append(rd.randint(-axisize,axisize))
+    lista_loc_eixo_y.append(rd.randint(-axisize,axisize))
 
 
 #initializes figure
@@ -65,13 +67,13 @@ for x in range(len(lista_loc_eixo_x)):
     path = Path(verts, codes)
 
     ax = fig.add_subplot(111)
-    color = "gray"
+    color = "black"
     if(badperson):
         color = "red"
     patch = patches.PathPatch(path, facecolor=color, lw=.5)
     ax.add_patch(patch)
-    ax.set_xlim(-105,105)
-    ax.set_ylim(-105,105)
+    ax.set_xlim(-axisize-10,axisize+10)
+    ax.set_ylim(-axisize-10,axisize+10)
 
 print((total),"pessoas ultrapassaram o distanciamento social minimo")
 plt.show()
