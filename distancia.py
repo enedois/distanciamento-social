@@ -4,6 +4,7 @@ lista_loc_eixo_x = [0,2,12,13]
 lista_loc_eixo_y = [1,3,5,7]
 total = 0
 distanciamentosocial = 3
+badperson = false;
 
 print("distanciamento social configurado é de",distanciamentosocial,"metros")
 

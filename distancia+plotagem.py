@@ -12,12 +12,14 @@ import random as rd
 lista_loc_eixo_x = []
 lista_loc_eixo_y = []
 
+#filling random array
 for x in range(100):
     lista_loc_eixo_x.append(rd.randint(-100,100))
     lista_loc_eixo_y.append(rd.randint(-100,100))
 
+distanciasegura = 3
 
-lado = 3/2
+lado = distanciasegura/2
 fig = plt.figure()
 
 for x in range(len(lista_loc_eixo_x)):
@@ -37,7 +39,8 @@ for x in range(len(lista_loc_eixo_x)):
     path = Path(verts, codes)
     
     ax = fig.add_subplot(111)
-    patch = patches.PathPatch(path, facecolor=numpy.random.rand(3,), lw=0)
+    color = numpy.random.rand(3,)
+    patch = patches.PathPatch(path, facecolor=color, lw=0)
     ax.add_patch(patch)
     ax.set_xlim(-100,100)
     ax.set_ylim(-100,100)
