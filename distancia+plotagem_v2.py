@@ -29,6 +29,8 @@ for x in range(100):
 #initializes figure
 fig = plt.figure()
 
+print("o distanciamento social definido é de",distanciamentosocial,"metros")
+
 for x in range(len(lista_loc_eixo_x)):
     badperson = bool(False)
     cord = ("("+str(lista_loc_eixo_x[x])+","+str(lista_loc_eixo_y[x])+")")
