@@ -37,7 +37,7 @@ for x in range(len(lista_loc_eixo_x)):
     path = Path(verts, codes)
     
     ax = fig.add_subplot(111)
-    patch = patches.PathPatch(path, facecolor=numpy.random.rand(3,), lw=2)
+    patch = patches.PathPatch(path, facecolor=numpy.random.rand(3,), lw=0)
     ax.add_patch(patch)
     ax.set_xlim(-100,100)
     ax.set_ylim(-100,100)
