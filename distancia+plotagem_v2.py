@@ -4,14 +4,14 @@ warnings.filterwarnings("ignore")
 import matplotlib.pyplot as plt
 from matplotlib.path import Path
 import matplotlib.patches as patches
-import numpy
+import numpy as np
 import random as rd
 import math
-distanciamentosocial = 5
-badperson = bool(False)
-lado = distanciamentosocial/2
-total = 0
-axisize = 100
+
+qtdofindividuals = 100
+axisize = 200
+distanciamentosocial = 3
+results = []
 
 #fixed size array
 #lista_loc_eixo_x = [-10,-5,0,5]
@@ -21,60 +21,81 @@ axisize = 100
 lista_loc_eixo_x = []
 lista_loc_eixo_y = []
 
-#filling random array, change range number to add more points
-qtdofindividuals = 1000
-for x in range(qtdofindividuals):
-    lista_loc_eixo_x.append(rd.randint(-axisize,axisize))
-    lista_loc_eixo_y.append(rd.randint(-axisize,axisize))
+###filling random array with qtdofindividuals positions, change range number to add more people
+##for x in range(qtdofindividuals):
+##    lista_loc_eixo_x.append(rd.randint(0,axisize))
+##    lista_loc_eixo_y.append(rd.randint(0,axisize))
 
 
 #initializes figure
-fig = plt.figure()
+#fig = plt.figure()
 
-print("o distanciamento social definido é de",distanciamentosocial,"metros")
-
-for x in range(len(lista_loc_eixo_x)):
+print("Distanciamento social definido é de",distanciamentosocial,"metros")
+   
+for range100 in range(0,100):
+    fig = plt.figure()
+    lista_loc_eixo_x=[]
+    lista_loc_eixo_y=[]
+    for x in range(qtdofindividuals):
+        lista_loc_eixo_x.append(rd.randint(0,axisize))
+        lista_loc_eixo_y.append(rd.randint(0,axisize))
     badperson = bool(False)
-    cord = ("("+str(lista_loc_eixo_x[x])+","+str(lista_loc_eixo_y[x])+")")
-    #print(cord)
-    #print("Ponto(",lista_loc_eixo_x[x],",",lista_loc_eixo_y[x],")")
-    for y in range(len(lista_loc_eixo_x)):
-        distx = lista_loc_eixo_x[x]-lista_loc_eixo_x[y]
-        disty = lista_loc_eixo_y[x]-lista_loc_eixo_y[y]
-        disttotal = math.sqrt((distx**2)+ (disty**2))
-        if not(disttotal==0):
-            if disttotal <distanciamentosocial :
-                badperson = bool(True)
-                #print(cord,'esbarra em', distx, disty)
-                print(cord,'esbarra em', lista_loc_eixo_x[y],",",lista_loc_eixo_y[y])
-                total+=1
-        #print("ponto(",lista_loc_eixo_x[y],",",lista_loc_eixo_y[y],")")
+    total = 0
+    badperson = bool(False)
+    lado = 1
+    total = 0    
+      
+    for x in range(len(lista_loc_eixo_x)):
+        badperson = bool(False)
+        cord = ("("+str(lista_loc_eixo_x[x])+","+str(lista_loc_eixo_y[x])+")")
+        #print(cord)
+        #print("Ponto(",lista_loc_eixo_x[x],",",lista_loc_eixo_y[x],")")
+        for y in range(len(lista_loc_eixo_x)):
+            cord2 = ("("+str(lista_loc_eixo_x[y])+","+str(lista_loc_eixo_y[y])+")")
+            if not(cord == cord2):        
+                #print("Compararando", cord,"com",cord2)
+                distx = lista_loc_eixo_x[x]-lista_loc_eixo_x[y]
+                disty = lista_loc_eixo_y[x]-lista_loc_eixo_y[y]
+                disttotal = math.sqrt((distx**2)+ (disty**2))      
+                if not(disttotal==0):
+                    if disttotal <distanciamentosocial :
+                        badperson = bool(True)                     
+                        #print(cord,'tocou',cord2)
+                        total+=1      
 
 
-    verts = [
-    (lista_loc_eixo_x[x]-lado,lista_loc_eixo_y[x]-lado), # left, bottom
-    (lista_loc_eixo_x[x]-lado,lista_loc_eixo_y[x]+lado), # left, top
-    (lista_loc_eixo_x[x]+lado,lista_loc_eixo_y[x]+lado), # right, top
-    (lista_loc_eixo_x[x]+lado,lista_loc_eixo_y[x]-lado), # right, bottom
-    (0., 0.), # ignored
-    ]
-    codes = [Path.MOVETO,
-             Path.LINETO,
-             Path.LINETO,
-             Path.LINETO,
-             Path.CLOSEPOLY,
-             ]
-    path = Path(verts, codes)
+        verts = [
+        (lista_loc_eixo_x[x]-lado,lista_loc_eixo_y[x]-lado), # left, bottom
+        (lista_loc_eixo_x[x]-lado,lista_loc_eixo_y[x]+lado), # left, top
+        (lista_loc_eixo_x[x]+lado,lista_loc_eixo_y[x]+lado), # right, top
+        (lista_loc_eixo_x[x]+lado,lista_loc_eixo_y[x]-lado), # right, bottom
+        (0., 0.), # ignored
+        ]
+        codes = [Path.MOVETO,
+                 Path.LINETO,
+                 Path.LINETO,
+                 Path.LINETO,
+                 Path.CLOSEPOLY,
+                 ]
+        path = Path(verts, codes)
+        ax = fig.add_subplot(111)
+        color = "black"
+        if(badperson):
+            color = "red"
+        patch = patches.PathPatch(path, facecolor=color, lw=.5)
+        ax.add_patch(patch)
+        ax.set_xlim(0-2,axisize+2)
+        ax.set_ylim(0-2,axisize+2)
 
-    ax = fig.add_subplot(111)
-    color = "black"
-    if(badperson):
-        color = "red"
-    patch = patches.PathPatch(path, facecolor=color, lw=.5)
-    ax.add_patch(patch)
-    ax.set_xlim(-axisize-10,axisize+10)
-    ax.set_ylim(-axisize-10,axisize+10)
-
-print((total),"pessoas ultrapassaram o distanciamento social minimo")
-plt.show()
-    
+    results.append((total/qtdofindividuals))
+    print((total),"pessoas ultrapassaram o distanciamento social minimo")
+    print((total/qtdofindividuals)*100,"% das pessoas não cumpriram o distanciamento")
+    print(np.mean(results))
+    print(np.mean(results)<0.10)
+    plt.savefig(str(range100)+"_"+str(qtdofindividuals)+"_"+".png")
+    print("Iteração:",range100)
+print("Rodadas",len(results),"iterações")
+print("Pior Resultado:",np.amax(results)*100)
+print("Melhor Resultado:",np.amin(results)*100)
+print("Média:",np.mean(results)*100)
+print(results)
